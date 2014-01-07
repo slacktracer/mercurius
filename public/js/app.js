@@ -6,6 +6,12 @@ angular
         'mercurius'
     ])
 
+    .config(function config(mercuriusProvider) {
+
+        mercuriusProvider.configuration.notifier.templateUrl = 'js/modules/mercurius/mercurius.html';
+
+    })
+
     .factory('random', function randomFactory() {
 
         'use strict';
@@ -158,5 +164,3 @@ angular
         };
 
     });
-
-var x;

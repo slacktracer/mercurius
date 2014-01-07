@@ -28,7 +28,8 @@ angular
                     ]
                 },
                 notifierConfiguration = {
-                    margin: 20
+                    margin: 20,
+                    templateUrl: 'js/modules/mercurius/mercurius.html'
                 };
             return {
                 $get: function $get() {
@@ -67,6 +68,10 @@ angular
                     }
                     notifier.configuration = notifierConfiguration;
                     return notifier;
+                },
+                configuration: {
+                    notification: notification.defaultConfiguration,
+                    notifier: notifierConfiguration
                 }
             };
         }
@@ -118,7 +123,7 @@ angular
                         recalculateVerticalDistance();
                     });
                 },
-                templateUrl: 'js/modules/mercurius/mercurius.html'
+                templateUrl: mercurius.configuration.templateUrl
             };
         }
     ])
