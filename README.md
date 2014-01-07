@@ -29,7 +29,20 @@ You'll will have to link the css file and the js file (that is the module itself
         >
     </script>
 
-Then you'll inject th mercurius service wherever you need it, like in the provided demo:
+Put mercurius in your main module dependencies and configure the template url (the path to mercurius.html):
+
+    angular
+        .module('demo', [
+            'ngAnimate',
+            'ngSanitize',
+            'mercurius'
+        ])
+        .config(function config(mercuriusProvider) {
+            mercuriusProvider.configuration.notifier.templateUrl = 'js/modules/mercurius/mercurius.html';
+        })
+
+
+Then you'll inject the mercurius service wherever you need it, like in the provided demo:
 
 ```javascript
 .controller('demo', function demoController($scope, random, mercurius) {
