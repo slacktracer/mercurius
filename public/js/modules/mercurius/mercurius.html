@@ -1,0 +1,31 @@
+<div
+    data-ng-repeat="(location, notifications) in locations"
+    >
+
+    <div
+        class="
+            alert
+            alert-{{notification.type}}
+            mercurius
+        "
+        data-mercurius-notification
+        data-ng-class="{
+            'alert-dismissable': notification.dismissable
+        }"
+        data-ng-repeat="notification in notifications"
+        >
+
+        <button
+            aria-hidden="true"
+            class="close"
+            data-ng-click="close($index)"
+            data-ng-if="notification.dismissable"
+            type="button"
+            >&times;
+        </button>
+
+        <span data-ng-bind-html="notification.content"></span>
+
+    </div>
+
+</div>

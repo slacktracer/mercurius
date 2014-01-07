@@ -1,4 +1,4 @@
 mercurius
 =========
 
-An angular notification module
+_An angular notification module_
