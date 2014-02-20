@@ -4,7 +4,7 @@ An AngularJS Notifier Module
 First things first: checkout the demo at http://anzol.biz/mercurius.
 
 This module contains one module(**notifier**) one service (**notifier**) and two directives (**stNotifier** and **stNotification**).
-It depends on Angularjs modules **ngAnimate** and **ngSanitize**.
+It depends on Angularjs modules **ngAnimate** and **ngSanitize**. (also, **jQuery**)
 
 ## How to Use It
 
@@ -57,16 +57,16 @@ And, finally, use it!:
 The above example uses the default values for the configuration object. Of course, you only have to define the properties that differ from the defaults.
 
     notifier('Don\'t get cocky, <em>kid</em>! =P', {
-        location: 'bottomMiddle'
+        location: 'bottomMiddle',
         width: 200
     });
 
     notifier('I have a bad feeling about this...', {
-        type: 'info'
+        type: 'info',
         width: 800
     });
 
-    notifier('<strong>Now you listen to me, lad!</strong> I ain\'t gonna tolerate this anymore!, {
+    notifier('<strong>Now you listen to me, lad!</strong> I ain\'t gonna tolerate this anymore!', {
         type: 'danger',
         dismissable: false,
         timeout: 10000
