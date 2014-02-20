@@ -1,5 +1,8 @@
 angular
-    .module('notifier', [])
+    .module('notifier', [
+        'ngAnimate',
+        'ngSanitize'
+    ])
     .provider('notifier', [
         function notifierProvider() {
             'use strict';
@@ -82,7 +85,7 @@ angular
             };
         }
     ])
-    .directive('notifier', [
+    .directive('stNotifier', [
         '$rootScope',
         '$timeout',
         '$window',
@@ -126,6 +129,7 @@ angular
             };
             return {
                 restrict: 'AE',
+                scope: {},
                 link: function link(scope) {
                     // function link(scope, element, attributes)
                     scope.locations = notifier.locations;
@@ -140,7 +144,7 @@ angular
             };
         }
     ])
-    .directive('notification', [
+    .directive('stNotification', [
         '$rootScope',
         '$timeout',
         '$window',
@@ -177,6 +181,9 @@ angular
                     return leftForCentre;
                 };
             return {
+                scope: {
+                    notification: '='
+                },
                 link: function link(scope, element) {
                     // function link(scope, element, attributes)
                     switch (scope.notification.location) {

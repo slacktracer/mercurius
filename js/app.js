@@ -1,7 +1,5 @@
 angular
     .module('demo', [
-        'ngAnimate',
-        'ngSanitize',
         'notifier'
     ])
     .config([
@@ -17,11 +15,9 @@ angular
     ])
     .controller('demo', [
         '$scope',
-        '$timeout',
         'notifier',
         function demoController(
             $scope,
-            $timeout,
             notifier
         ) {
             'use strict';

@@ -7,11 +7,12 @@
             alert-{{notification.type}}
             notifier
         "
-        data-notification
+        data-st-notification
         data-ng-class="{
             'alert-dismissable': notification.dismissable
         }"
         data-ng-repeat="notification in notifications"
+        notification="notification"
         >
         <button
             aria-hidden="true"
