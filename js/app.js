@@ -29,14 +29,6 @@ angular
                 '<strong>Integer vitae mi aliquet</strong>, condimentum ligula sit amet, viverra eros. Mauris condimentum vulputate enim, ut tincidunt turpis dapibus sed. Duis.',
                 '<strong>Morbi a quam ligula.</strong> Suspendisse potenti. Suspendisse convallis tempor tempor. Nam consequat gravida mauris in facilisis. Ut mauris purus, egestas sed sem vel, ullamcorper bibendum.'
             ];
-            $timeout(function(){
-            // notifier($scope.samples[3], { type: 'success' });
-            // notifier($scope.samples[1]);
-            // notifier($scope.samples[3]);
-            // notifier($scope.samples[1]);
-            // notifier($scope.samples[3], { type: 'info' });
-            // notifier($scope.samples[1], { type: 'danger' });
-            // }, 20)
             $scope.notification = {
                 content: '',
                 dismissable: true,
