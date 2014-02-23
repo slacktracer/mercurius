@@ -32,6 +32,18 @@ angular
                     type: 'warning',
                     width: 'auto'
                 };
+            notificationLocations.topLeft.x = 'left';
+            notificationLocations.topLeft.y = 'top';
+            notificationLocations.topMiddle.x = 'middle';
+            notificationLocations.topMiddle.y = 'top';
+            notificationLocations.topRight.x = 'right';
+            notificationLocations.topRight.y = 'top';
+            notificationLocations.bottomLeft.x = 'left';
+            notificationLocations.bottomLeft.y = 'bottom';
+            notificationLocations.bottomMiddle.x = 'middle';
+            notificationLocations.bottomMiddle.y = 'bottom';
+            notificationLocations.bottomRight.x = 'right';
+            notificationLocations.bottomRight.y = 'bottom';
             return {
                 $get: [
                     '$rootScope',
@@ -72,7 +84,9 @@ angular
                                         notification.remove();
                                     }, notification.timeout);
                                 }
-                                return notification;
+                                return {
+                                    remove: notification.remove.bind(notification)
+                                };
                             };
                         notifier.configuration = notifierConfiguration;
                         notifier.locations = notificationLocations;
@@ -148,20 +162,22 @@ angular
     ])
     .directive('stNotification', [
         '$rootScope',
+        '$timeout',
         '$window',
         'notifier',
         function stNotificationDirective(
             $rootScope,
+            $timeout,
             $window,
             notifier
         ) {
             'use strict';
             var unwatcher,
-                calculateVerticalDistance = function calculateVerticalDistance(location) {
+                calculateVerticalDistance = function calculateVerticalDistance(location, position) {
                     var verticalDistance = notifier.configuration.margin;
-                    notifier.locations[location].forEach(function forEach(notification) {
+                    notifier.locations[location].forEach(function forEach(notification, index, array) {
                         // forEach(notification, index, notifications)
-                        if (notification.element) {
+                        if (index < position) {
                             verticalDistance += parseInt(notification.element.css('height'), 10);
                             verticalDistance += notifier.configuration.margin;
                         }
@@ -180,36 +196,38 @@ angular
                     leftForCentre /= 2;
                     leftForCentre -= width / 2;
                     return leftForCentre;
+                };
+            return {
+                scope: {
+                    notification: '='
                 },
-                setTop = function setTop(scope, element) {
-                    element.css('top', calculateVerticalDistance(scope.notification.location) + 'px');
-                },
-                setRight = function setRight(element) {
-                    element.css('right', notifier.configuration.margin + 'px');
-                },
-                setBottom = function setBottom(scope, element) {
-                    element.css('bottom', calculateVerticalDistance(scope.notification.location) + 'px');
-                },
-                setLeft = function setLeft(element) {
-                    element.css('left', notifier.configuration.margin + 'px');
-                },
-                setLeftForCentre = function setLeftForCentre(scope, element) {
-                    if (scope.notification.width !== 'auto') {
-                        element.css('left', calculateLeftForCentre(scope.notification.width) + 'px');
-                    } else {
-                        unwatcher = scope.$watch(function watchExpression() {
-                            return element.css('width');
-                        }, function listener(width) {
-                            // function listener(oldValue, newValue, scope)
-                            element.css('left', calculateLeftForCentre(parseInt(width, 10)) + 'px');
-                            unwatcher();
+                link: function link(scope, element) {
+                    // function link(scope, element, attributes)
+                    var x = notifier.locations[scope.notification.location].x,
+                        y = notifier.locations[scope.notification.location].y,
+                        index = notifier.locations[scope.notification.location].indexOf(scope.notification);
+                    // set position
+                    if (x === 'middle') {
+                        // centre
+                        if (scope.notification.width !== 'auto') {
+                            element.css('left', calculateLeftForCentre(scope.notification.width) + 'px');
+                        } else {
+                            unwatcher = scope.$watch(function watchExpression() {
+                                return element.css('width');
+                            }, function listener(width) {
+                                // function listener(oldValue, newValue, scope)
+                                element.css('left', calculateLeftForCentre(parseInt(width, 10)) + 'px');
+                                unwatcher();
+                            });
+                        }
+                        angular.element($window).on('resize', function onResize() {
+                            element.css('left', calculateLeftForCentre(parseInt(element.css('width'), 10)) + 'px');
                         });
                     }
-                    angular.element($window).on('resize', function onResize() {
-                        element.css('left', calculateLeftForCentre(parseInt(element.css('width'), 10)) + 'px');
-                    });
-                },
-                setWidth = function setWidth(scope, element) {
+                    element.css(x, notifier.configuration.margin + 'px');
+                    element.css(y, '-9999px');
+                    element.css('z-index', 2000);
+                    // set width
                     if (scope.notification.width !== 'auto') {
                         element.css('width', scope.notification.width + 'px');
                     } else {
@@ -221,58 +239,14 @@ angular
                             unwatcher();
                         });
                     }
-                },
-                setMaxWidth = function setMaxWidth(element) {
+                    // set max-width
                     element.css('max-width', calculateMaxWidth() + 'px');
                     angular.element($window).on('resize', function onResize() {
                         element.css('max-width', calculateMaxWidth() + 'px');
                     });
-                };
-            return {
-                scope: {
-                    notification: '='
-                },
-                link: function link(scope, element) {
-                    // function link(scope, element, attributes)
-                    switch (scope.notification.location) {
-                    case 'topLeft':
-                        setLeft(element);
-                        setTop(scope, element);
-                        element.css('z-index', 2000);
-                        break;
-                    case 'topMiddle':
-                        setTop(scope, element);
-                        element.css('z-index', 2000);
-                        setLeftForCentre(scope, element);
-                        break;
-                    case 'topRight':
-                        setRight(element);
-                        setTop(scope, element);
-                        element.css('z-index', 2000);
-                        break;
-                    case 'bottomLeft':
-                        setBottom(scope, element);
-                        setLeft(element);
-                        element.css('z-index', 2000);
-                        break;
-                    case 'bottomMiddle':
-                        setBottom(scope, element);
-                        element.css('z-index', 2000);
-                        setLeftForCentre(scope, element);
-                        break;
-                    case 'bottomRight':
-                        setBottom(scope, element);
-                        setRight(element);
-                        element.css('z-index', 2000);
-                        break;
-                    }
-                    setWidth(scope, element);
-                    setMaxWidth(element);
-                    unwatcher = scope.$watch(function watchExpression() {
-                        return element.css('height');
-                    }, function listener() {
-                        $rootScope.$emit('notificationHeightChange', scope.notification.location);
-                        unwatcher();
+                    // adjust
+                    $timeout(function $timeout() {
+                        element.css(y, calculateVerticalDistance(scope.notification.location, index) + 'px');
                     });
                     scope.notification.element = element;
                 }
