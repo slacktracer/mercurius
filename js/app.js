@@ -7,18 +7,16 @@ angular
         function config(notifierProvider) {
             'use strict';
             // these are the options configurable in the provider (and their default values)
-            notifierProvider.notifierConfiguration.animationTime = 400,
-            notifierProvider.notifierConfiguration.margin = 20,
-            notifierProvider.notifierConfiguration.templateUrl = 'js/modules/notifier/notifier.html'
+            notifierProvider.notifierConfiguration.animationTime = 400;
+            notifierProvider.notifierConfiguration.margin = 20;
+            notifierProvider.notifierConfiguration.templateUrl = 'js/modules/notifier/notifier.html';
         }
     ])
     .controller('demo', [
         '$scope',
-        '$timeout',
         'notifier',
         function demoController(
             $scope,
-            $timeout,
             notifier
         ) {
             'use strict';
@@ -29,14 +27,6 @@ angular
                 '<strong>Integer vitae mi aliquet</strong>, condimentum ligula sit amet, viverra eros. Mauris condimentum vulputate enim, ut tincidunt turpis dapibus sed. Duis.',
                 '<strong>Morbi a quam ligula.</strong> Suspendisse potenti. Suspendisse convallis tempor tempor. Nam consequat gravida mauris in facilisis. Ut mauris purus, egestas sed sem vel, ullamcorper bibendum.'
             ];
-            $timeout(function(){
-            // notifier($scope.samples[3], { type: 'success' });
-            // notifier($scope.samples[1]);
-            // notifier($scope.samples[3]);
-            // notifier($scope.samples[1]);
-            // notifier($scope.samples[3], { type: 'info' });
-            // notifier($scope.samples[1], { type: 'danger' });
-            // }, 20)
             $scope.notification = {
                 content: '',
                 dismissable: true,

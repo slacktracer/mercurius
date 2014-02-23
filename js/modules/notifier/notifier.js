@@ -85,7 +85,13 @@ angular
                                     }, notification.timeout);
                                 }
                                 return {
-                                    remove: notification.remove.bind(notification)
+                                    remove: notification.remove.bind(notification),
+                                    type: function type(value) {
+                                        if (angular.isUndefined) {
+                                            return this.type;
+                                        }
+                                        this.type = (notificationTypes.indexOf(value) !== -1) ? value : notificationConfiguration.type;
+                                    }.bind(notification)
                                 };
                             };
                         notifier.configuration = notifierConfiguration;
@@ -95,6 +101,21 @@ angular
                 ],
                 notifierConfiguration: notifierConfiguration,
                 notificationConfiguration: notificationConfiguration
+            };
+        }
+    ])
+    .directive('stNotifierLoader', [
+        '$compile',
+        function stNotifierLoader(
+            $compile
+        ) {
+            return {
+                restrict: 'A',
+                scope: {},
+                link: function link(scope, element) {
+                    // function link(scope, element, attributes)
+                    element.append($compile('<div data-st-notifier></div>')(scope));
+                }
             };
         }
     ])
@@ -143,7 +164,7 @@ angular
             return {
                 restrict: 'AE',
                 scope: {},
-                link: function link(scope) {
+                link: function link(scope, element) {
                     // function link(scope, element, attributes)
                     scope.locations = notifier.locations;
                     angular.element($window).on('resize', function onResize() {
@@ -198,6 +219,7 @@ angular
                     return leftForCentre;
                 };
             return {
+                restrict: 'A',
                 scope: {
                     notification: '='
                 },
