@@ -1,10 +1,11 @@
 An AngularJS Notifier Module
 ============================
 
-First things first: checkout the demo at http://anzol.biz/mercurius.
+Check out the demo at http://anzol.biz/mercurius.
 
-This module contains one module(**notifier**) one service (**notifier**) and two directives (**stNotifier** and **stNotification**).
+This project contains one module(**notifier**) one service (**notifier**) and three directives (**stNotifierLoader**, **stNotifier** and **stNotification**).
 It depends on Angularjs modules **ngAnimate** and **ngSanitize**. (also, **jQuery**)
+The style comes from Bootstrap.
 
 ## How to Use It
 
@@ -20,7 +21,7 @@ First reference the stylesheet and the js file (the module itself):
         >
     </script>
 
-Put **notifier** as a dependency in your module and configure the URL to the teplate file (the path to notifier.html):
+Put **notifier** as a dependency in your module and configure the URL to the template file (the path to notifier.html):
 
     angular
         .module('YOUR_MODULE', [
@@ -42,7 +43,14 @@ Then you'll inject the notifier service wherever you need it, like in the provid
         ) {
             'use strict';
 
-And, finally, use it!:
+You must also declare the **stNotifierLoader** directive in your html. For example, in the **body** tag:
+
+    <body
+        data-ng-controller="demo"
+        data-st-notifier-loader
+        >
+
+And, finally, you can use it like this:
 
     // notifier(content, configuration);
     // for example:
@@ -56,30 +64,42 @@ And, finally, use it!:
 
 The above example uses the default values for the configuration object. Of course, you only have to define the properties that differ from the defaults.
 
-    notifier('Don\'t get cocky, <em>kid</em>! =P', {
-        location: 'bottomMiddle',
-        width: 200
-    });
-
     notifier('I have a bad feeling about this...', {
         type: 'info',
         width: 800
     });
 
-    notifier('<strong>Now you listen to me, lad!</strong> I ain\'t gonna tolerate this anymore!', {
+    notifier('<strong>No!</strong> We ain\'t gonna take it!', {
         type: 'danger',
         dismissable: false,
         timeout: 10000
     });
 
-The **notifier** function return a **notification** object with. among other properties, a **remove** method, so you can remove a notification programmatically at any time.
+The **notifier** function return an interface object for the created **notification** with three methods (so far):
+
+### content(value:String):
+To change the content of the notification programmatically or access its current value.
+
+### remove():
+To remove the notification.
 
     var n = notifier('Frankly, my dear, I don\'t give a damn...');
     setTimeout(function () {
         n.remove();
     }, 10000);
 
-Most feedback is welcome! =D
+### type([value]):
+To change the type of the notification programmatically or access its current value.
+
+With content and type functions you can usually turn a warning notification in an error or success, for example.
+
+## History
+
+### 1.0.0
+@2014-02-23: Version 1.0.0 is here! =)
+
+
+Most feedback is welcome! Open an issue or drop me a line!: slacktracer@gmail.com
 
 
 ## License

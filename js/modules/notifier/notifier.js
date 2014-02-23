@@ -85,9 +85,19 @@ angular
                                     }, notification.timeout);
                                 }
                                 return {
+                                    content: function content(value) {
+                                        if (angular.isUndefined(value)) {
+                                            return this.content;
+                                        }
+                                        if (angular.isString(value)) {
+                                            this.content = value;
+                                        } else {
+                                            throw 'Invalid content!';
+                                        }
+                                    }.bind(notification),
                                     remove: notification.remove.bind(notification),
                                     type: function type(value) {
-                                        if (angular.isUndefined) {
+                                        if (angular.isUndefined(value)) {
                                             return this.type;
                                         }
                                         this.type = (notificationTypes.indexOf(value) !== -1) ? value : notificationConfiguration.type;
@@ -109,6 +119,7 @@ angular
         function stNotifierLoader(
             $compile
         ) {
+            'use strict';
             return {
                 restrict: 'A',
                 scope: {},
@@ -164,7 +175,7 @@ angular
             return {
                 restrict: 'AE',
                 scope: {},
-                link: function link(scope, element) {
+                link: function link(scope) {
                     // function link(scope, element, attributes)
                     scope.locations = notifier.locations;
                     angular.element($window).on('resize', function onResize() {
@@ -182,12 +193,10 @@ angular
         }
     ])
     .directive('stNotification', [
-        '$rootScope',
         '$timeout',
         '$window',
         'notifier',
         function stNotificationDirective(
-            $rootScope,
             $timeout,
             $window,
             notifier
@@ -196,8 +205,8 @@ angular
             var unwatcher,
                 calculateVerticalDistance = function calculateVerticalDistance(location, position) {
                     var verticalDistance = notifier.configuration.margin;
-                    notifier.locations[location].forEach(function forEach(notification, index, array) {
-                        // forEach(notification, index, notifications)
+                    notifier.locations[location].forEach(function forEach(notification, index) {
+                        // forEach(value, index, array)
                         if (index < position) {
                             verticalDistance += parseInt(notification.element.css('height'), 10);
                             verticalDistance += notifier.configuration.margin;

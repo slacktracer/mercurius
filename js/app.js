@@ -20,6 +20,7 @@ angular
             notifier
         ) {
             'use strict';
+            var lastNotification;
             $scope.samples = [
                 '<strong>Suspendisse</strong> accumsan placerat diam, vel.',
                 '<strong>Aliquam eu ultricies libero</strong>, vel viverra mauris. Pellentesque suscipit, elit a volutpat cursus, lacus sapien.',
@@ -44,7 +45,11 @@ angular
             $scope.show = function show(notification) {
                 notification.timeout = parseInt(notification.timeout, 10) || null;
                 notification.width = parseInt(notification.width, 10) || null;
-                notifier(notification.content, notification);
+                lastNotification = notifier(notification.content, notification);
+            };
+            $scope.change = function change() {
+                lastNotification.content($scope.notification.content);
+                lastNotification.type($scope.notification.type);
             };
         }
     ]);
