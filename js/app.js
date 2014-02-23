@@ -7,18 +7,16 @@ angular
         function config(notifierProvider) {
             'use strict';
             // these are the options configurable in the provider (and their default values)
-            notifierProvider.notifierConfiguration.animationTime = 400,
-            notifierProvider.notifierConfiguration.margin = 20,
-            notifierProvider.notifierConfiguration.templateUrl = 'js/modules/notifier/notifier.html'
+            notifierProvider.notifierConfiguration.animationTime = 400;
+            notifierProvider.notifierConfiguration.margin = 20;
+            notifierProvider.notifierConfiguration.templateUrl = 'js/modules/notifier/notifier.html';
         }
     ])
     .controller('demo', [
         '$scope',
-        '$timeout',
         'notifier',
         function demoController(
             $scope,
-            $timeout,
             notifier
         ) {
             'use strict';
