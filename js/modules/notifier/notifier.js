@@ -149,7 +149,7 @@ angular
                                 animationTime = notifier.configuration.animationTime,
                                 animator = {};
                             notifications.forEach(function forEach(notification, innerIndex) {
-                                // forEach(notification, innerIndex, notifications)
+                                // forEach(value, index, array)--mdnsig
                                 if (innerIndex < outerIndex) {
                                     verticalDistance += parseInt(notification.element.css('height'), 10);
                                     verticalDistance += notifier.configuration.margin;
@@ -206,7 +206,7 @@ angular
                 calculateVerticalDistance = function calculateVerticalDistance(location, position) {
                     var verticalDistance = notifier.configuration.margin;
                     notifier.locations[location].forEach(function forEach(notification, index) {
-                        // forEach(value, index, array)
+                        // forEach(value, index, array)--mdnsig
                         if (index < position) {
                             verticalDistance += parseInt(notification.element.css('height'), 10);
                             verticalDistance += notifier.configuration.margin;
@@ -246,7 +246,7 @@ angular
                             unwatcher = scope.$watch(function watchExpression() {
                                 return element.css('width');
                             }, function listener(width) {
-                                // function listener(oldValue, newValue, scope)
+                                // function listener(newValue, oldValue, scope)--angdoc
                                 element.css('left', calculateLeftForCentre(parseInt(width, 10)) + 'px');
                                 unwatcher();
                             });
@@ -265,7 +265,7 @@ angular
                         unwatcher = scope.$watch(function watchExpression() {
                             return element.css('width');
                         }, function listener(width) {
-                            // function listener(oldValue, newValue, scope)
+                            // function listener(newValue, oldValue, scope)--angdoc
                             element.css('width', width + 'px');
                             unwatcher();
                         });
