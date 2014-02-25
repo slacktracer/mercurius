@@ -96,6 +96,14 @@ angular
                                         }
                                     }.bind(notification),
                                     remove: notification.remove.bind(notification),
+                                    timeout: function timeout(value) {
+                                        this.timeout = (angular.isNumber(value)) ? value : notificationConfiguration.timeout;
+                                        if (this.timeout !== null) {
+                                            $timeout(function $timeout() {
+                                                this.remove();
+                                            }.bind(notification), this.timeout);
+                                        }
+                                    }.bind(notification),
                                     type: function type(value) {
                                         if (angular.isUndefined(value)) {
                                             return this.type;

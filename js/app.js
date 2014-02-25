@@ -49,6 +49,7 @@ angular
             };
             $scope.change = function change() {
                 lastNotification.content($scope.notification.content);
+                lastNotification.timeout(parseInt($scope.notification.timeout, 10) || null);
                 lastNotification.type($scope.notification.type);
             };
         }
