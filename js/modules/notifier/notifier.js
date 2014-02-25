@@ -9,7 +9,7 @@ angular
             var notifierConfiguration = {
                     animationTime: 400,
                     margin: 20,
-                    templateUrl: 'js/modules/notifier/notifier.html'
+                    templateUrl: '/js/modules/notifier/notifier.html'
                 },
                 notificationLocations = {
                     'topLeft': [],

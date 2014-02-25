@@ -29,7 +29,7 @@ Put **notifier** as a dependency in your module and configure the URL to the tem
         ])
         .config(function config(notifierProvider) {
             // this example path represent how I organize my modules...
-            notifierProvider.configuration.notifier.templateUrl = 'js/modules/notifier/notifier.html';
+            notifierProvider.notifierConfiguration.templateUrl = '/js/modules/notifier/notifier.html';
         })
 
 Then you'll inject the notifier service wherever you need it, like in the provided demo:
