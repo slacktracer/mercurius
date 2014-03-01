@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Mercurius by slacktracer</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Mercurius</h1>
+        <h2>An AngularJS Notifier Module</h2>
+        <a href="https://github.com/slacktracer/mercurius" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="an-angularjs-notifier-module" class="anchor" href="#an-angularjs-notifier-module"><span class="octicon octicon-link"></span></a>An AngularJS Notifier Module</h1>
+
+<p>Check out the demo at <a href="http://anzol.biz/mercurius">http://anzol.biz/mercurius</a>.</p>
+
+<p>This project contains one module(<strong>notifier</strong>) one service (<strong>notifier</strong>) and three directives (<strong>stNotifierLoader</strong>, <strong>stNotifier</strong> and <strong>stNotification</strong>).
+It depends on Angularjs modules <strong>ngAnimate</strong> and <strong>ngSanitize</strong>. (also, <strong>jQuery</strong>)
+The style comes from Bootstrap.</p>
+
+<h2>
+<a name="how-to-use-it" class="anchor" href="#how-to-use-it"><span class="octicon octicon-link"></span></a>How to Use It</h2>
+
+<p>First reference the stylesheet and the js file (the module itself):</p>
+
+<pre><code>&lt;link
+    href="your/path/to/notifier.css"
+    rel="stylesheet"
+    &gt;
+
+&lt;script
+    src="your/path/to/notifier.js"
+    &gt;
+&lt;/script&gt;
+</code></pre>
+
+<p>Put <strong>notifier</strong> as a dependency in your module and configure the URL to the template file (the path to notifier.html):</p>
+
+<pre><code>angular
+    .module('YOUR_MODULE', [
+        'notifier'
+    ])
+    .config(function config(notifierProvider) {
+        // this example path represent how I organize my modules...
+        notifierProvider.notifierConfiguration.templateUrl = '/js/modules/notifier/notifier.html';
+    })
+</code></pre>
+
+<p>Then you'll inject the notifier service wherever you need it, like in the provided demo:</p>
+
+<pre><code>.controller('demo', [
+    '$scope',
+    'notifier',
+    function demoController(
+        $scope,
+        notifier
+    ) {
+        'use strict';
+</code></pre>
+
+<p>You must also declare the <strong>stNotifierLoader</strong> directive in your html. For example, in the <strong>body</strong> tag:</p>
+
+<pre><code>&lt;body
+    data-ng-controller="demo"
+    data-st-notifier-loader
+    &gt;
+</code></pre>
+
+<p>And, finally, you can use it like this:</p>
+
+<pre><code>// notifier(content, configuration);
+// for example:
+notifier('Greendale Community College rules!', {
+    dismissable: true,
+    location: 'topMiddle',
+    timeout: null,
+    type: 'warning',
+    width: 'auto'
+});
+</code></pre>
+
+<p>The above example uses the default values for the configuration object. Of course, you only have to define the properties that differ from the defaults.</p>
+
+<pre><code>notifier('I have a bad feeling about this...', {
+    type: 'info',
+    width: 800
+});
+
+notifier('&lt;strong&gt;No!&lt;/strong&gt; We ain\'t gonna take it!', {
+    type: 'danger',
+    dismissable: false,
+    timeout: 10000
+});
+</code></pre>
+
+<p>The <strong>notifier</strong> function return an interface object for the created <strong>notification</strong> with three methods (so far):</p>
+
+<h3>
+<a name="contentvaluestring" class="anchor" href="#contentvaluestring"><span class="octicon octicon-link"></span></a>content(value:String):</h3>
+
+<p>To change the content of the notification programmatically or access its current value.</p>
+
+<h3>
+<a name="remove" class="anchor" href="#remove"><span class="octicon octicon-link"></span></a>remove():</h3>
+
+<p>To remove the notification.</p>
+
+<pre><code>var n = notifier('Frankly, my dear, I don\'t give a damn...');
+setTimeout(function () {
+    n.remove();
+}, 10000);
+</code></pre>
+
+<h3>
+<a name="typevalue" class="anchor" href="#typevalue"><span class="octicon octicon-link"></span></a>type([value]):</h3>
+
+<p>To change the type of the notification programmatically or access its current value.</p>
+
+<p>With content and type functions you can usually turn a warning notification in an error or success, for example.</p>
+
+<h2>
+<a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
+
+<h3>
+<a name="100" class="anchor" href="#100"><span class="octicon octicon-link"></span></a>1.0.0</h3>
+
+<p>@2014-02-23: Version 1.0.0 is here! =)</p>
+
+<p>Most feedback is welcome! Open an issue or drop me a line!: <a href="mailto:slacktracer@gmail.com">slacktracer@gmail.com</a></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (c) 2014 Thiago Figueiredo</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/slacktracer/mercurius/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/slacktracer/mercurius/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/slacktracer/mercurius"></a> is maintained by <a href="https://github.com/slacktracer">slacktracer</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
